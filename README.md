@@ -19,37 +19,40 @@ This project was built as a learning exercise before developing a larger multi-a
 
 ## Architecture
 ```
-User
-   │
-   ▼
-FastAPI Model Server
-   │
-   ▼
-LLM Router
-   │
-   ├──────────────┐
-   │              │
-No Tool       Tool Required
-   │              │
-   ▼              ▼
-Direct LLM    MCP Tool Server
- Answer            │
-                   ▼
-            Structured Result
-                   │
-                   ▼
-              LLM Response
-                   │
-                   ▼
-                Final Answer
+                   User
+                     │
+                     ▼
+          FastAPI Model Server
+                     │
+                     ▼
+              LLM Router Node
+                     │
+          ┌──────────┴──────────┐
+          │                     │
+      No Tool              Tool Required
+          │                     │
+          ▼                     ▼
+   Direct LLM Answer      MCP Tool Server
+                                  │
+                                  ▼
+                         Execute Requested Tool
+                                  │
+                                  ▼
+                          Structured Tool Result
+                                  │
+                                  ▼
+                         LLM Response Generator
+                                  │
+                                  ▼
+                             Final Response
 ```
 
 ## Available Tools
-### Favorite Food
-Returns mock favorite food information for members of a data science team.
-
-### Search Documents
+### `search_docs(query)`
 Searches a small mock hospital documentation corpus and returns relevant table descriptions.
+
+### `get_table_info(table_name)`
+Returns metadata about a mock hospital database table, including its description and primary key.
 
 ## Tech Stack
 - Python
