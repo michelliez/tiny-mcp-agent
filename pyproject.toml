@@ -1,0 +1,7 @@
+[project]
+name = "tiny-agent"
+version = "0.1.0"
+description = "Agent engineering"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
