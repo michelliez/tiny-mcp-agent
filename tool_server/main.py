@@ -27,6 +27,32 @@ def search_docs(query: str) -> list[dict]:
     ]
 
 @mcp.tool
+def get_table_info(table_name: str) -> dict:
+    """Return metadata about a mock hospital table"""
+    tables = {
+        "encounters": {
+            "table": "encounters",
+            "primary_key": "encounter_id",
+            "description": "Contains admission, discharge, department, and encounter date information.",
+        },
+        "diagnoses": {
+            "table": "diagnoses",
+            "primary_key": "diagnosis_id",
+            "description": "Contains diagnosis codes and diagnosis descriptions.",
+        },
+        "departments": {
+            "table": "departments",
+            "primary_key": "department_id",
+            "description": "Contains department names and department metadata.",
+        },
+    }
+    return tables.get(
+        table_name.lower(),
+        {
+            "error": f"Unknown table: {table_name}"
+        }
+    )
+
 def favorite_food(person: str) -> str:
     foods = {
         'michelle': 'noodles',

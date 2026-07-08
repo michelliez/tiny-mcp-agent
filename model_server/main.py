@@ -52,7 +52,15 @@ def call_ai_hub(system_prompt: str, user_prompt: str) -> str:
 @app.post('/ask')
 async def ask(req: AskRequest):
     router_system_prompt = """You are a routing agent. Return ONLY raw JSON. Do not include markdown. Do not include explanations. Do not include code fences. You have two available tools. 
-    1: favorite_food(person: str) Description: Returns a person's favorite food. 
+    1: get_table_info(table_name: str) Description: Returns metadata for a mock hospital table, including primary key and description of the table. Use when the user asks about a specific table. When calling get_table_info, normalize the query:
+        - Use plural form for words.
+        - Remove filler words like "info", "information", "where", "find".
+        - Treat related forms as equivalent, e.g. "department" → "departments".
+        Example:
+        User: Tell me about the encounters table.
+        Output:
+        {"use_tool": true, "tool_name": "get_table_info", "tool_input": {"table_name": "encounters"}}
+
     2: search_docs(query: str) Description: Searches tiny, mock hospital documentation for relevant tables. When calling search_docs, normalize the query:
         - Use singular/base words.
         - Remove filler words like "info", "information", "where", "find".
@@ -96,14 +104,6 @@ async def ask(req: AskRequest):
         'answer': direct_answer
     }
 
-
-# def run_tool(tool_name: str, tool_input: dict):
-#     if tool_name == 'favorite_food':
-#         return favorite_food(person=tool_input['person'])
-    
-#     if tool_name == 'search_docs':
-#         return search_docs(query=tool_input['query'])
-#     raise ValueError(f'Unknown tool: {tool_name}')
 
 async def run_tool(tool_name: str, tool_input: dict):
     async with Client(f"{os.getenv('MCP_URL')}") as client:
