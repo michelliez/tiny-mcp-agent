@@ -53,6 +53,7 @@ def get_table_info(table_name: str) -> dict:
         }
     )
 
+
 def favorite_food(person: str) -> str:
     foods = {
         'michelle': 'noodles',
