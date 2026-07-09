@@ -25,6 +25,9 @@ This project was built as a learning exercise before developing a larger multi-a
           FastAPI Model Server
                      │
                      ▼
+                Policy Gate
+                     │
+                     ▼
               LLM Router Node
                      │
           ┌──────────┴──────────┐
